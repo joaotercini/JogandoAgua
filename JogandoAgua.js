@@ -54,7 +54,7 @@ function Update() {
     document.getElementById('flow').innerHTML = Water.Flow;
     document.getElementById('load').innerHTML = Water.Load;
     document.getElementById('income').innerHTML = Water.Income;
-    document.getElementById('concentration').innerHTML = Water.Concentration;
+    document.getElementById('concentration').innerHTML = Water.Concentration.toFixed(2);
     document.getElementById('city_out').innerHTML = Water.City.OutWatershed;
     document.getElementById('industry_out').innerHTML = Water.Industry.OutWatershed;
     document.getElementById('irrigated_area_out').innerHTML = Water.IrrigatedArea.OutWatershed;
