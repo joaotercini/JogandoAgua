@@ -1,6 +1,66 @@
 <html>
 <body>
-<script type="text/javascript" src="JogandoAgua.js">
-</script>
+    <script type="text/javascript" src="JogandoAgua.js">
+    </script>
+
+    <h2>Summary</h2>
+    <span>Flow:</span>
+    <span id="flow"></span>
+    <span>m³/s</span>
+    <br />
+    <span>Load:</span>
+    <span id="load"></span>
+    <span>m³/s</span>
+    <br />
+    <span>Income:</span>
+    <span>R$</span>
+    <span id="income"></span>
+    <br />
+    <span>Concentration:</span>
+    <span id="concentration"></span>
+
+    <hr />
+    <h2>Elements</h2>
+    <span>City:</span>
+    <span id="city_out"></span>
+    <button onclick="Water.City.Up()">+</button>
+    <button onclick="Water.City.Down()">-</button>
+    <br />
+    <span>Industry:</span>
+    <span id="industry_out"></span>
+    <button onclick="Water.Industry.Up()">+</button>
+    <button onclick="Water.Industry.Down()">-</button>
+    <br />
+    <span>Irrigated Area:</span>
+    <span id="irrigated_area_out"></span>
+    <button onclick="Water.IrrigatedArea.Up()">+</button>
+    <button onclick="Water.IrrigatedArea.Down()">-</button>
+    <br />
+    <span>Treatment Station:</span>
+    <span id="treatment_station_out"></span>
+    <button onclick="Water.TreatmentStation.Up()">+</button>
+    <button onclick="Water.TreatmentStation.Down()">-</button>
+    <br />
+    <span>Dam:</span>
+    <span id="dam_out"></span>
+    <button onclick="Water.Dam.Up()">+</button>
+    <button onclick="Water.Dam.Down()">-</button>
+
+    <hr />
+    <h2>Watershed</h2>
+    <span>City:</span>
+    <span id="city_in"></span>
+    <br />
+    <span>Industry:</span>
+    <span id="industry_in"></span>
+    <br />
+    <span>Irrigated Area:</span>
+    <span id="irrigated_area_in"></span>
+    <br />
+    <span>Treatment Station:</span>
+    <span id="treatment_station_in"></span>
+    <br />
+    <span>Dam:</span>
+    <span id="dam_in"></span>
 </body>
 </html>

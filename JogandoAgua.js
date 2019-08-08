@@ -6,11 +6,13 @@ class Element {
 	Up() {
 		if (this.InWatershed < this.Max) {
             this.InWatershed += 1;
+            Update();
 		}
 	}	
 	Down() {
 		if (this.InWatershed > 0) {
             this.InWatershed -= 1;
+            Update();
 		}
     }
     get OutWatershed() {
@@ -30,7 +32,11 @@ class Watershed {
         return 1800 - 6 * this.City.InWatershed - 40 * this.Industry.InWatershed - 20 * this.IrrigatedArea.InWatershed + 1000 * this.Dam.InWatershed;
     }
     get Load() {
-        return 648 * this.City.InWatershed + 1209 * this.Industry.InWatershed - 524 * this.TreatmentStation.InWatershed;
+        var _Load = 648 * this.City.InWatershed + 1209 * this.Industry.InWatershed - 524 * this.TreatmentStation.InWatershed;
+        if (_Load < 0) {
+            _Load = 0;
+        }
+        return _Load;
     }
     get Income() {
         return 800 * this.City.InWatershed + 4000 * this.Industry.InWatershed + 900 * this.IrrigatedArea.InWatershed - 200 * this.TreatmentStation.InWatershed - 2000 * this.Dam.InWatershed;
@@ -41,7 +47,22 @@ class Watershed {
 }
 
 let Water = new Watershed();
-//Water.City.Up();
-alert(Water.Flow);
 console.log(Water);
-    
+window.onload = function () { Update(); };
+
+function Update() {
+    document.getElementById('flow').innerHTML = Water.Flow;
+    document.getElementById('load').innerHTML = Water.Load;
+    document.getElementById('income').innerHTML = Water.Income;
+    document.getElementById('concentration').innerHTML = Water.Concentration;
+    document.getElementById('city_out').innerHTML = Water.City.OutWatershed;
+    document.getElementById('industry_out').innerHTML = Water.Industry.OutWatershed;
+    document.getElementById('irrigated_area_out').innerHTML = Water.IrrigatedArea.OutWatershed;
+    document.getElementById('treatment_station_out').innerHTML = Water.TreatmentStation.OutWatershed;
+    document.getElementById('dam_out').innerHTML = Water.Dam.OutWatershed;
+    document.getElementById('city_in').innerHTML = Water.City.InWatershed;
+    document.getElementById('industry_in').innerHTML = Water.Industry.InWatershed;
+    document.getElementById('irrigated_area_in').innerHTML = Water.IrrigatedArea.InWatershed;
+    document.getElementById('treatment_station_in').innerHTML = Water.TreatmentStation.InWatershed;
+    document.getElementById('dam_in').innerHTML = Water.Dam.InWatershed;
+}
