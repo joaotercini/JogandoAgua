@@ -65,4 +65,100 @@ function Update() {
     document.getElementById('irrigated_area_in').innerHTML = Water.IrrigatedArea.InWatershed;
     document.getElementById('treatment_station_in').innerHTML = Water.TreatmentStation.InWatershed;
     document.getElementById('dam_in').innerHTML = Water.Dam.InWatershed;
+
+    if (Water.Concentration > 5) {
+        $("#txtConcentration").css("color", "#F37178");
+    } else {
+        $("#txtConcentration").css("color", "#4688a3");
+    }
 }
+
+$(function () {
+
+    var classnameCity = document.getElementsByClassName("city");
+    var fncCity = function () {
+        $(this).appendTo("#divCity");
+        Water.City.InWatershed = document.getElementById("watershed").getElementsByClassName("city").length;
+        Update();
+    };
+    for (var i = 0; i < classnameCity.length; i++) {
+        classnameCity[i].addEventListener('click', fncCity, false);
+    }
+
+    var classnameIndustry = document.getElementsByClassName("industry");
+    var fncIndustry = function () {
+        $(this).appendTo("#divIndustry");
+        Water.Industry.InWatershed = document.getElementById("watershed").getElementsByClassName("industry").length;
+        Update();
+    };
+    for (var i = 0; i < classnameIndustry.length; i++) {
+        classnameIndustry[i].addEventListener('click', fncIndustry, false);
+    }
+
+    var classnameIrrigatedArea = document.getElementsByClassName("irrigatedarea");
+    var fncIrrigatedArea = function () {
+        $(this).appendTo("#divIrrigatedArea");
+        Water.IrrigatedArea.InWatershed = document.getElementById("watershed").getElementsByClassName("irrigatedarea").length;
+        Update();
+    };
+    for (var i = 0; i < classnameIrrigatedArea.length; i++) {
+        classnameIrrigatedArea[i].addEventListener('click', fncIrrigatedArea, false);
+    }
+
+    var classnameTreatmentStation = document.getElementsByClassName("treatmentstation");
+    var fncTreatmentStation = function () {
+        $(this).appendTo("#divTreatmentStation");
+        Water.TreatmentStation.InWatershed = document.getElementById("watershed").getElementsByClassName("treatmentstation").length;
+        Update();
+    };
+    for (var i = 0; i < classnameTreatmentStation.length; i++) {
+        classnameTreatmentStation[i].addEventListener('click', fncTreatmentStation, false);
+    }
+
+    var classnameDam = document.getElementsByClassName("dam");
+    var fncDam = function () {
+        $(this).appendTo("#divDam");
+        Water.Dam.InWatershed = document.getElementById("watershed").getElementsByClassName("dam").length;
+        Update();
+    };
+    for (var i = 0; i < classnameDam.length; i++) {
+        classnameDam[i].addEventListener('click', fncDam, false);
+    }
+
+});
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function dropWatershed(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+
+    Water.City.InWatershed = document.getElementById("watershed").getElementsByClassName("city").length;
+    Water.Industry.InWatershed = document.getElementById("watershed").getElementsByClassName("industry").length;    
+    Water.IrrigatedArea.InWatershed = document.getElementById("watershed").getElementsByClassName("irrigatedarea").length;
+    Water.TreatmentStation.InWatershed = document.getElementById("watershed").getElementsByClassName("treatmentstation").length;
+    Water.Dam.InWatershed = document.getElementById("watershed").getElementsByClassName("dam").length;
+
+    Update();
+}
+
+//function dropCity(ev) {
+//    ev.preventDefault();
+//    var data = ev.dataTransfer.getData("text");
+//    var docId = document.getElementById(data);    
+//    if (docId.classList.contains('city')) {
+//        ev.target.appendChild(document.getElementById(data));
+//        Update();
+//    }    
+//}
+
+
+
+

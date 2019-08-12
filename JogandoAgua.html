@@ -1,68 +1,332 @@
-<html>
+﻿<html>
+<head>
+    <meta content="utf-8" http-equiv="encoding">    
+    <title>Jogando Água</title>
+</head>
 <body>
+    <link rel="stylesheet" href="files/jquery-ui.css">
+    <script type="text/javascript" src="files/jquery-1.12.4.js">
+    </script>
+    <script type="text/javascript" src="files/jquery-ui.js">
+    </script>
     <script type="text/javascript" src="JogandoAgua.js">
     </script>
+    <style>
+        #test {
+            max-width: 1200px;
+            overflow-x: auto;
+            background-color: lightgray;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-    <h2>Summary</h2>
-    <span>Flow:</span>
-    <span id="flow"></span>
-    <span>m�/s</span>
-    <br />
-    <span>Load:</span>
-    <span id="load"></span>
-    <span>kg/dia</span>
-    <br />
-    <span>Income:</span>
-    <span>R$</span>
-    <span id="income"></span>
-    <span>mi</span>
-    <br />
-    <span>Concentration:</span>
-    <span id="concentration"></span>
-    <span>mg/l</span>
+        #elements {
+            width: 1200px;
+            background-color: white;
+            /*text-align: center;
+            vertical-align: middle;*/
+        }
 
-    <hr />
-    <h2>Elements</h2>
-    <span>City:</span>
-    <span id="city_out"></span>
-    <button onclick="Water.City.Up()">+</button>
-    <button onclick="Water.City.Down()">-</button>
-    <br />
-    <span>Industry:</span>
-    <span id="industry_out"></span>
-    <button onclick="Water.Industry.Up()">+</button>
-    <button onclick="Water.Industry.Down()">-</button>
-    <br />
-    <span>Irrigated Area:</span>
-    <span id="irrigated_area_out"></span>
-    <button onclick="Water.IrrigatedArea.Up()">+</button>
-    <button onclick="Water.IrrigatedArea.Down()">-</button>
-    <br />
-    <span>Treatment Station:</span>
-    <span id="treatment_station_out"></span>
-    <button onclick="Water.TreatmentStation.Up()">+</button>
-    <button onclick="Water.TreatmentStation.Down()">-</button>
-    <br />
-    <span>Dam:</span>
-    <span id="dam_out"></span>
-    <button onclick="Water.Dam.Up()">+</button>
-    <button onclick="Water.Dam.Down()">-</button>
+        #watershed {
+            height: 400px;
+            background-color: #89C4BE;
+        }
 
-    <hr />
-    <h2>Watershed</h2>
-    <span>City:</span>
-    <span id="city_in"></span>
-    <br />
-    <span>Industry:</span>
-    <span id="industry_in"></span>
-    <br />
-    <span>Irrigated Area:</span>
-    <span id="irrigated_area_in"></span>
-    <br />
-    <span>Treatment Station:</span>
-    <span id="treatment_station_in"></span>
-    <br />
-    <span>Dam:</span>
-    <span id="dam_in"></span>
+            #watershed > img {
+                cursor: pointer;
+                max-width: 100px;
+                max-height: 100px;
+            }
+
+            #watershed > .city {
+                cursor: pointer;
+                max-width: 200px;
+                max-height: 100px;
+            }
+
+            #watershed > .industry {
+                cursor: pointer;
+                max-width: 200px;
+                max-height: 100px;
+            }
+
+            #watershed > .irrigatedarea {
+                cursor: pointer;
+                max-width: 80px;
+                max-height: 80px;
+            }
+
+            #watershed > .treatmentstation {
+                cursor: pointer;
+                max-width: 50px;
+                max-height: 50px;
+            }
+
+            #watershed > .dam {
+                cursor: pointer;
+                max-width: 300px;
+                max-height: 100px;
+            }
+
+        #divCity img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        #divIndustry img {
+            max-width: 70px;
+            max-height: 70px;
+        }
+
+        #divIrrigatedArea img {
+            max-width: 60px;
+            max-height: 60px;
+        }
+
+        #divTreatmentStation img {
+            max-width: 40px;
+            max-height: 40px;
+        }
+
+        #divDam img {
+            max-width: 80px;
+            max-height: 80px;
+        }
+
+        td {
+            padding: 10px;
+            border: white solid 5px;
+        }
+
+            td > h3 {
+                padding: 0;
+                margin: 0;
+            }
+
+        .btn.btn-default {
+            border-color: #eaeaea;
+        }
+
+        .divElement {
+            margin: auto;
+            height: 240px;
+            width: 240px;
+            background-color: #EEF4C8;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .box-city {
+            background-color: #F37178;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .text-city {
+            color: #F37178;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0;
+        }
+
+        .box-industry {
+            background-color: #F2BE53;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .text-industry {
+            color: #F2BE53;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0;
+        }
+
+        .box-irrigatedarea {
+            background-color: #C7E672;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .text-irrigatedarea {
+            color: #C7E672;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0;
+        }
+
+        .box-treatmentstation {
+            background-color: #F9E462;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .text-treatmentstation {
+            color: #F9E462;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0;
+        }
+
+        .box-dam {
+            background-color: #64C3EA;
+            color: white;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .text-dam {
+            color: #64C3EA;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0;
+        }
+
+        .results {
+            background-color: #EEF4C8;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        h2 {
+            color: #4688a3;
+            margin: 0;
+        }
+    </style>
+
+    <div id="test">
+        <table id="elements">
+            <thead>
+                <tr><th colspan="5"><h2>Jogando água</h2></th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="divCity" class="divElement">
+                        <img class="element city" id="city01" draggable="true" ondragstart="drag(event)" src="files/city.png" />
+                        <img class="element city" id="city02" draggable="true" ondragstart="drag(event)" src="files/city.png" />
+                        <img class="element city" id="city03" draggable="true" ondragstart="drag(event)" src="files/city.png" />
+                        <img class="element city" id="city04" draggable="true" ondragstart="drag(event)" src="files/city.png" />
+                        <img class="element city" id="city05" draggable="true" ondragstart="drag(event)" src="files/city.png" />
+                    </td>
+                    <td id="divIndustry" class="divElement">
+                        <img class="element industry" id="industry01" draggable="true" ondragstart="drag(event)" src="files/industry.png" />
+                        <img class="element industry" id="industry02" draggable="true" ondragstart="drag(event)" src="files/industry.png" />
+                        <img class="element industry" id="industry03" draggable="true" ondragstart="drag(event)" src="files/industry.png" />
+                        <img class="element industry" id="industry04" draggable="true" ondragstart="drag(event)" src="files/industry.png" />
+                        <img class="element industry" id="industry05" draggable="true" ondragstart="drag(event)" src="files/industry.png" />
+                        <img class="element industry" id="industry06" draggable="true" ondragstart="drag(event)" src="files/industry.png" />
+                    </td>
+                    <td id="divIrrigatedArea" class="divElement">
+                        <img class="element irrigatedarea" id="irrigatedarea01" draggable="true" ondragstart="drag(event)" src="files/irrigatedarea.png" />
+                        <img class="element irrigatedarea" id="irrigatedarea02" draggable="true" ondragstart="drag(event)" src="files/irrigatedarea.png" />
+                        <img class="element irrigatedarea" id="irrigatedarea03" draggable="true" ondragstart="drag(event)" src="files/irrigatedarea.png" />
+                        <img class="element irrigatedarea" id="irrigatedarea04" draggable="true" ondragstart="drag(event)" src="files/irrigatedarea.png" />
+                        <img class="element irrigatedarea" id="irrigatedarea05" draggable="true" ondragstart="drag(event)" src="files/irrigatedarea.png" />
+                        <img class="element irrigatedarea" id="irrigatedarea06" draggable="true" ondragstart="drag(event)" src="files/irrigatedarea.png" />
+                        <img class="element irrigatedarea" id="irrigatedarea07" draggable="true" ondragstart="drag(event)" src="files/irrigatedarea.png" />
+                        <img class="element irrigatedarea" id="irrigatedarea08" draggable="true" ondragstart="drag(event)" src="files/irrigatedarea.png" />
+                    </td>
+                    <td id="divTreatmentStation" class="divElement">
+                        <img class="element treatmentstation" id="treatmentstation01" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation02" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation03" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation04" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation05" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation06" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation07" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation08" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation09" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation010" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation11" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation12" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation13" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation14" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation15" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation16" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation17" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation18" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation19" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                        <img class="element treatmentstation" id="treatmentstation20" draggable="true" ondragstart="drag(event)" src="files/treatmentstation.png" />
+                    </td>
+                    <td id="divDam" class="divElement">
+                        <img class="element dam" id="dam01" draggable="true" ondragstart="drag(event)" src="files/dam.png" />
+                        <img class="element dam" id="dam02" draggable="true" ondragstart="drag(event)" src="files/dam.png" />
+                        <img class="element dam" id="dam03" draggable="true" ondragstart="drag(event)" src="files/dam.png" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="box-city"><h3>Cidade</h3></td>
+                    <td class="box-industry"><h3>Indústria</h3></td>
+                    <td class="box-irrigatedarea"><h3>Área irrigada</h3></td>
+                    <td class="box-treatmentstation"><h3>Tratamento de esgoto</h3></td>
+                    <td class="box-dam"><h3>Barragem</h3></td>
+                </tr>
+                <tr>
+                    <td class="text-city">
+                        Disponíveis: <span id="city_out"></span><br />
+                        Utilizados: <span id="city_in"></span><br />
+                        <!--<button class="btn btn-default btn-xs" onclick="Water.City.Up()">+</button>
+                        <button class="btn btn-default btn-xs" onclick="Water.City.Down()">-</button>-->
+                    </td>
+                    <td class="text-industry">
+                        Disponíveis: <span id="industry_out"></span><br />
+                        Utilizados: <span id="industry_in"></span><br />
+                        <!--<button class="btn btn-default btn-xs" onclick="Water.Industry.Up()">+</button>
+                        <button class="btn btn-default btn-xs" onclick="Water.Industry.Down()">-</button>-->
+                    </td>
+                    <td class="text-irrigatedarea">
+                        Disponíveis: <span id="irrigated_area_out"></span><br />
+                        Utilizados: <span id="irrigated_area_in"></span><br />
+                        <!--<button class="btn btn-default btn-xs" onclick="Water.IrrigatedArea.Up()">+</button>
+                        <button class="btn btn-default btn-xs" onclick="Water.IrrigatedArea.Down()">-</button>-->
+                    </td>
+                    <td class="text-treatmentstation">
+                        Disponíveis: <span id="treatment_station_out"></span><br />
+                        Utilizados: <span id="treatment_station_in"></span><br />
+                        <!--<button class="btn btn-default btn-xs" onclick="Water.TreatmentStation.Up()">+</button>
+                        <button class="btn btn-default btn-xs" onclick="Water.TreatmentStation.Down()">-</button>-->
+                    </td>
+                    <td class="text-dam">
+                        Disponíveis: <span id="dam_out"></span><br />
+                        Utilizados: <span id="dam_in"></span><br />
+                        <!--<button class="btn btn-default btn-xs" onclick="Water.Dam.Up()">+</button>
+                        <button class="btn btn-default btn-xs" onclick="Water.Dam.Down()">-</button>-->
+                    </td>
+                </tr>
+                <tr>
+                    <td id="watershed" ondrop="dropWatershed(event)" ondragover="allowDrop(event)" colspan="5"></td>
+                </tr>
+                <tr class="results">
+                    <td>
+                        Vazão<br />
+                        <span id="flow"></span>
+                        <span>m³/s</span>
+                    </td>
+                    <td>
+                        Carga poluidora<br />
+                        <span id="load"></span>
+                        <span>kg/dia</span>
+                    </td>
+                    <td>
+                        Renda<br />
+                        <span>R$</span>
+                        <span id="income"></span>
+                        <span>mi</span>
+                    </td>
+                    <td id="txtConcentration" colspan="2">
+                        <b>
+                            Situação ambiental do rio<br />
+                            <span id="concentration"></span>
+                            <span>mg/l</span>
+                        </b>
+                    </td>
+                </tr>
+                <tr><td colspan="5" style="text-align: center;padding:0;"><img style="max-height: 30px; margin: auto;" src="files/labsid.png" /></td></tr>
+            </tbody>
+        </table>       
+    </div>    
 </body>
 </html>
